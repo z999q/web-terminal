@@ -1,0 +1,561 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: #000;
+    color: #e6e6e6;
+
+    font-family:
+        "Cascadia Mono",
+        "Fira Code",
+        "JetBrains Mono",
+        "Courier New",
+        monospace;
+
+    overflow: hidden;
+}
+
+.terminal {
+    width: 100%;
+    height: 100%;
+
+    padding: 18px;
+
+    background: #000;
+
+    overflow-y: auto;
+
+    cursor: text;
+}
+
+.output {
+    white-space: pre-wrap;
+    word-break: break-word;
+
+    line-height: 1.45;
+    font-size: 15px;
+}
+
+.input-line {
+    display: flex;
+    align-items: baseline;
+
+    width: 100%;
+
+    line-height: 1.45;
+    font-size: 15px;
+}
+
+.prompt {
+    color: #55ff55;
+
+    white-space: pre;
+}
+
+.command-input {
+    flex: 1;
+
+    min-width: 0;
+
+    margin-left: 8px;
+
+    padding: 0;
+
+    border: 0;
+    outline: none;
+
+    background: transparent;
+    color: #fff;
+
+    font: inherit;
+}
+
+.command-input::selection {
+    background: #444;
+}
+
+.command-input:focus {
+    outline: none;
+}
+
+/* Scrollbar */
+
+.terminal::-webkit-scrollbar {
+    width: 8px;
+}
+
+.terminal::-webkit-scrollbar-track {
+    background: #000;
+}
+
+.terminal::-webkit-scrollbar-thumb {
+    background: #333;
+}
+
+.terminal::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .terminal {
+        padding: 12px;
+    }
+
+    .output,
+    .input-line {
+        font-size: 13px;
+    }
+}
+/* ============================================================
+   MOBILE TERMINAL KEYBOARD
+   ============================================================ */
+
+.terminal-keys {
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 1000;
+
+    display: flex;
+
+    gap: 6px;
+
+    padding: 7px;
+
+    overflow-x: auto;
+
+    background: #111;
+
+    border-top: 1px solid #333;
+
+    scrollbar-width: none;
+
+}
+
+.terminal-keys::-webkit-scrollbar {
+    display: none;
+}
+
+
+.terminal-keys button {
+
+    flex: 0 0 auto;
+
+    min-width: 48px;
+
+    height: 36px;
+
+    padding: 0 10px;
+
+    border: 1px solid #444;
+
+    border-radius: 5px;
+
+    background: #222;
+
+    color: #fff;
+
+    font-family: monospace;
+
+    font-size: 13px;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+
+}
+
+
+.terminal-keys button:active {
+
+    background: #444;
+
+    transform: scale(0.96);
+
+}
+
+
+/*
+ * Make room for the toolbar
+ */
+
+.terminal {
+
+    padding-bottom: 58px;
+
+}
+
+
+/*
+ * Ctrl active state
+ */
+
+.terminal-keys button.active {
+
+    background: #555;
+
+    border-color: #aaa;
+
+}
+
+
+/*
+ * Mobile
+ */
+
+@media (max-width: 600px) {
+
+    .terminal-keys button {
+
+        min-width: 44px;
+
+        height: 34px;
+
+        font-size: 12px;
+
+        padding: 0 8px;
+
+    }
+
+}
+/* ============================================================
+   FULL-SCREEN NANO EDITOR
+   ============================================================ */
+
+.nano-editor {
+    position: fixed !important;
+
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+
+    width: 100vw !important;
+    height: 100dvh !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    box-sizing: border-box !important;
+
+    display: flex !important;
+    flex-direction: column !important;
+
+    background: #000 !important;
+    color: #fff !important;
+
+    z-index: 99999 !important;
+
+    overflow: hidden !important;
+
+    font-family: monospace !important;
+}
+
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+.nano-header {
+    flex: 0 0 auto !important;
+
+    width: 100% !important;
+
+    min-height: 42px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+
+    padding: 8px 12px;
+
+    background: #111;
+
+    border-bottom: 1px solid #333;
+
+    color: #fff;
+
+    font-family: monospace;
+
+    font-size: 14px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* ============================================================
+   TOOLBAR
+   ============================================================ */
+
+.nano-toolbar {
+    flex: 0 0 auto !important;
+
+    width: 100% !important;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 7px 8px;
+
+    background: #181818;
+
+    border-bottom: 1px solid #333;
+
+    overflow-x: auto;
+}
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.nano-button {
+    flex: 0 0 auto;
+
+    min-width: 72px;
+
+    height: 40px;
+
+    padding: 0 14px;
+
+    border: 1px solid #555;
+
+    border-radius: 6px;
+
+    background: #252525;
+
+    color: #fff;
+
+    font-family: monospace;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    touch-action: manipulation;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+
+.nano-save {
+    background: #185c27;
+
+    border-color: #4caf50;
+}
+
+
+.nano-exit {
+    background: #5c2020;
+
+    border-color: #d55;
+}
+
+
+.nano-button:active {
+    transform: scale(.96);
+}
+
+
+/* ============================================================
+   TEXT AREA
+   ============================================================ */
+
+.nano-textarea {
+    display: block !important;
+
+    flex: 1 1 auto !important;
+
+    width: 100% !important;
+
+    height: auto !important;
+
+    min-height: 0 !important;
+
+    max-height: none !important;
+
+    margin: 0 !important;
+
+    box-sizing: border-box !important;
+
+    resize: none !important;
+
+    border: 0 !important;
+
+    outline: none !important;
+
+    border-radius: 0 !important;
+
+    padding: 12px !important;
+
+    background: #000 !important;
+
+    color: #fff !important;
+
+    font-family: monospace !important;
+
+    font-size: 16px !important;
+
+    line-height: 1.5 !important;
+
+    white-space: pre !important;
+
+    overflow: auto !important;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+/* ============================================================
+   STATUS
+   ============================================================ */
+
+.nano-status {
+    flex: 0 0 auto !important;
+
+    width: 100% !important;
+
+    min-height: 32px;
+
+    box-sizing: border-box;
+
+    padding: 7px 12px;
+
+    background: #111;
+
+    border-top: 1px solid #333;
+
+    color: #aaa;
+
+    font-family: monospace;
+
+    font-size: 12px;
+}
+
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.nano-footer {
+    flex: 0 0 auto !important;
+
+    width: 100% !important;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    min-height: 32px;
+
+    padding: 6px 10px;
+
+    background: #181818;
+
+    border-top: 1px solid #333;
+
+    color: #aaa;
+
+    font-family: monospace;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+
+    overflow-x: auto;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 600px) {
+
+    .nano-editor {
+        height: 100dvh !important;
+        min-height: 100dvh !important;
+    }
+
+
+    .nano-header {
+        min-height: 40px;
+
+        padding: 7px 10px;
+
+        font-size: 13px;
+    }
+
+
+    .nano-toolbar {
+        padding: 6px;
+    }
+
+
+    .nano-button {
+        height: 42px;
+
+        min-width: 72px;
+
+        font-size: 14px;
+    }
+
+
+    .nano-textarea {
+        padding: 12px !important;
+
+        font-size: 16px !important;
+
+        line-height: 1.5 !important;
+    }
+
+
+    .nano-status {
+        min-height: 30px;
+
+        padding: 6px 10px;
+    }
+
+
+    .nano-footer {
+        min-height: 30px;
+
+        padding: 5px 8px;
+
+        font-size: 10px;
+
+        gap: 12px;
+    }
+
+}

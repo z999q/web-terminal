@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+    >
+
+    <title>WebTerm</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+  <main id="terminal" class="terminal">
+
+    <div id="output" class="output"></div>
+
+    <div class="input-line">
+
+        <span id="prompt" class="prompt"></span>
+
+        <input
+            id="commandInput"
+            class="command-input"
+            type="text"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+        >
+
+    </div>
+
+    <!-- Mobile terminal keyboard -->
+
+    <div id="terminalKeys" class="terminal-keys">
+
+        <button data-key="CTRL">Ctrl</button>
+        <button data-key="ESC">Esc</button>
+        <button data-key="TAB">Tab</button>
+
+        <button data-key="ARROWUP">↑</button>
+        <button data-key="ARROWDOWN">↓</button>
+        <button data-key="ARROWLEFT">←</button>
+        <button data-key="ARROWRIGHT">→</button>
+
+        <button data-key="HOME">Home</button>
+        <button data-key="END">End</button>
+
+    </div>
+
+</main>
+</body>
+<script type="module" src="./core/terminal.js?v=20260927-2"></script>
+</html>
